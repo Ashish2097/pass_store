@@ -2,6 +2,7 @@ import { Component, NgModule, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from '../login.service';
+import { setCookie } from 'src/common/helper';
 
 @Component({
   selector: 'app-login-portal',
@@ -19,10 +20,9 @@ export class LoginPortalComponent implements OnInit {
     this.loginService.login({
       email: this.email.value,
       password: this.password.value,  
-    }).subscribe(data => {
-      console.log(data)
+    }).subscribe((data: any) => {
+      setCookie('accessToken', data.accessToken);
     });
-    // api to login
   }
 
   ngOnInit(): void {
