@@ -1,12 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-
-  constructor(private http: HttpClient) { }
+  private http: HttpClient;
+  constructor(private handler: HttpBackend) {
+    this.http = new HttpClient(handler);
+  }
 
   login(body: { email: string; password: string; }) {
     const url = "/auth/login";

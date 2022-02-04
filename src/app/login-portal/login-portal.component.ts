@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from '../login.service';
 import { setCookie } from 'src/common/helper';
+import { ACCESS_TOKEN } from 'src/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-portal',
@@ -11,7 +13,11 @@ import { setCookie } from 'src/common/helper';
 })
 export class LoginPortalComponent implements OnInit {
 
-  constructor(private http: HttpClient, private loginService: LoginService) { }
+  constructor(
+    private http: HttpClient,
+    private loginService: LoginService,
+    private router: Router,
+  ) { }
 
   email = new FormControl('');
   password = new FormControl('');
@@ -20,8 +26,14 @@ export class LoginPortalComponent implements OnInit {
     this.loginService.login({
       email: this.email.value,
       password: this.password.value,  
-    }).subscribe((data: any) => {
-      setCookie('accessToken', data.accessToken);
+    }).subscribe({
+      next: (data: any) => {
+        setCookie(ACCESS_TOKEN, data.accessToken);
+        this.router.navigate(['profile']);
+      },
+      error: (error) => {
+        alert(error.error.message);
+      }
     });
   }
 
