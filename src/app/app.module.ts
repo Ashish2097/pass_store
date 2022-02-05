@@ -7,12 +7,16 @@ import { LoginPortalComponent } from './login-portal/login-portal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from 'src/common/http-interceptor';
 import { PasswordListComponent } from './password-list/password-list.component';
+import { LogoutComponent } from './logout/logout.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginPortalComponent,
-    PasswordListComponent
+    PasswordListComponent,
+    LogoutComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

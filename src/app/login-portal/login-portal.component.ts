@@ -5,39 +5,39 @@ import { LoginService } from '../login.service';
 import { setCookie } from 'src/common/helper';
 import { ACCESS_TOKEN } from 'src/constants';
 import { Router } from '@angular/router';
+import { dashboardRoute } from '../routes';
 
 @Component({
   selector: 'app-login-portal',
   templateUrl: './login-portal.component.html',
-  styleUrls: ['./login-portal.component.scss']
+  styleUrls: ['./login-portal.component.scss'],
 })
 export class LoginPortalComponent implements OnInit {
-
   constructor(
     private http: HttpClient,
     private loginService: LoginService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   email = new FormControl('');
   password = new FormControl('');
 
-  handleLogin () {
-    this.loginService.login({
-      email: this.email.value,
-      password: this.password.value,  
-    }).subscribe({
-      next: (data: any) => {
-        setCookie(ACCESS_TOKEN, data.accessToken);
-        this.router.navigate(['profile']);
-      },
-      error: (error) => {
-        alert(error.error.message);
-      }
-    });
+  handleLogin() {
+    this.loginService
+      .login({
+        email: this.email.value,
+        password: this.password.value,
+      })
+      .subscribe({
+        next: (data: any) => {
+          setCookie(ACCESS_TOKEN, data.accessToken);
+          this.router.navigate([dashboardRoute]);
+        },
+        error: (error) => {
+          alert(error.error.message);
+        },
+      });
   }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

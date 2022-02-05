@@ -17,7 +17,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
   headers = new Headers();
 
-
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     // Get the auth token from the service.
     const authToken = this.auth.getAuthorizationToken();
@@ -28,9 +27,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     // Clone the request and replace the original headers with
     // cloned headers, updated with the authorization.
-    const authReq = req.clone({ setHeaders: {Authorization: 'Bearer ' + authToken}});
-    console.log(authReq);
-
+    const authReq = req.clone({
+      setHeaders: { Authorization: 'Bearer ' + authToken },
+    });
     // send cloned request with header to the next handler.
     return next.handle(authReq);
   }
